@@ -1,21 +1,21 @@
-//Require .env file
+//Require .env file (installed)
 require("dotenv").config();
 
 //require fs 
 const fs = require('fs');
 
-//Require .key file
+//Require .key file 
 const keys = require("./keys.js");
 
-//require axios
-const axios = require('axios');
+//require axios (installed)
+const axios = require('axios'); 
 
-// Require Moment to format date & time --------------------------------
+// Require Moment to format date & time (installed)
 const moment = require('moment');
 
 //APIS
-//Chasing spotify key----------------------------------------
-const Spotify = require("node-spotify-api");
+//Chasing spotify key (installed)
+const Spotify = require("node-spotify-api"); 
 let spotify = new Spotify(keys.spotify);
 //Chasing OMDb key
 let omdb = (keys.omdb);
@@ -52,7 +52,8 @@ function commands(userInput, userQuery) {
 
 commands(userInput, userQuery);
 
-//Concert this Axios
+//FUNCTIONS 
+//Concert this Axios --------------------------------------------------------------------------------------------------------------------------------
 function concertThis() {
     console.log("Searching for " + userQuery);
     var queryUrl = "https://rest.bandsintown.com/artists/" + userQuery + "/events?app_id=" + bandsintown
@@ -77,17 +78,16 @@ function concertThis() {
     })
 };
 
-//SPOTIFY API :D
+//SPOTIFY SEARCH :D ---------------------------------------------------------------------------------------------------------------------------------
 function spotifyThisSong() {
-    console.log(`\n---------\n\nSEARCHING FOR MUSIC!`);
+    console.log(`\n---------\n\nDRUM ROLL...`);
 
     // If user doesn't provide a query, I'll just chase the value of "Wonderwall" 
     if (!userQuery) {
         userQuery = "wonderwall"
-        console.log("Add a song or an Artist and discover more music!")
     };
 
-    // SPOTIFY SEARCH QUERY FORMAT
+    // Spotify search format used
     spotify.search({
         type: 'track',
         query: userQuery,
@@ -100,7 +100,69 @@ function spotifyThisSong() {
         let spotifyArr = data.tracks.items;
         //Looking thru the results. I'll print just 1 tracks because of the limit above
         for (i = 0; i < spotifyArr.length; i++) {
-            console.log(`\nThis is for you! \n\nArtist: ${data.tracks.items[i].album.artists[0].name} \nSong: ${data.tracks.items[i].name}\nAlbum: ${data.tracks.items[i].album.name}\nSpotify link: ${data.tracks.items[i].external_urls.spotify}\n\n ----------`)
+            console.log(`\nThis is for you! \n\nArtist: ${data.tracks.items[i].album.artists[0].name} \nSong: ${data.tracks.items[i].name}\nAlbum: ${data.tracks.items[i].album.name}\nSpotify link: ${data.tracks.items[i].external_urls.spotify}\n\n----------`)
         };
     });
 }
+
+//THIS IS A MIRACLE. THIS ONE WORKS!!!!
+// function movieThis() {
+//     // var queryUrl = "http://www.omdbapi.com/?t=shrek&apikey=ade4141a"
+//     var queryUrl = "http://www.omdbapi.com/?t=" + userQuery + "&apikey=ade4141a"
+//     axios.get(queryUrl).then(function(err, resp) {
+
+//         if(err) {
+//             return console.error(err);
+//         }else{
+//             console.log(resp.data)
+//         }
+//     })
+// }
+
+
+// function movieThis() {
+//     // var queryUrl = "http://www.omdbapi.com/?t=shrek&apikey=ade4141a"
+//     var queryUrl = "http://www.omdbapi.com/?t=" + userQuery + "&apikey=ade4141a"
+//     axios.get(queryUrl).then(function(err, resp, body) {
+
+//         // if(err) {
+//         //     return console.error(err);
+//         // }
+//         if(userQuery){			
+// 			console.log("Movie: " + body.data.Title);
+// 			// console.log("Release Year: " + body.Year);
+// 			// console.log("IMDB Rating: " + body.imdbRating);
+// 			// console.log("Rotten Tomatoes Ratings: " + body.Ratings[1].Value);
+// 			// console.log("Country: " + body.Country);
+// 			// console.log("Language: " + body.Language);
+// 			// console.log("Plot: " + body.Plot);
+// 			// console.log("Actors: " + body.Actors);
+// 		}else{
+//             console.log("meehh")
+//         }
+//     })
+// }
+
+
+function movieThis() {
+    console.log(`\n - - - - -\n\nSEARCHING FOR..."${userQuery}"`);
+    // if (!userQuery) {
+    //     userQuery = "mr nobody";
+    // };
+    // REQUEST USING OMDB API
+    var queryUrl = "http://www.omdbapi.com/?t=" + userQuery + "&apikey=ade4141a"
+    axios.get(queryUrl).then(function (error, response, body) {
+        console.log(response);
+        let userMovie = body;
+
+        // // BECAUSE THE ROTTEN TOMATOES RATING WAS NESTED IT WAS NECESSARY TO CAPTURE ITS VALUES IN AN ARRAY TO CREATE A PATH
+        // let ratingsArr = userMovie.Ratings;
+        // if (ratingsArr.length > 2) {}
+
+        // if (!error && response.statusCode === 200) {
+        //     console.log(`\nBA DA BOP!  That's for you...\n\nTitle: ${userMovie.Title}\nCast: ${userMovie.Actors}\nReleased: ${userMovie.Year}\nIMDb Rating: ${userMovie.imdbRating}\nRotten Tomatoes Rating: ${userMovie.Ratings[1].Value}\nCountry: ${userMovie.Country}\nLanguage: ${userMovie.Language}\nPlot: ${userMovie.Plot}\n\n- - - - -`)
+        // } else {
+        //     return console.log("Movie able to be found. Error:" + error)
+        // };
+    })
+};
