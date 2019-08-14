@@ -105,7 +105,7 @@ function spotifyThisSong() {
     });
 }
 
-//THIS IS A MIRACLE. THIS ONE WORKS!!!!
+//HEY LOOK MA! I MADE IT WORK!!!! ---------------------------------------------------------------------------------------------------------------------
 function movieThis() {
     console.log(`\n - - - - -\n\nGET READY THE POP CORN. SEARCHING FOR..."${userQuery}"`);
     //Movie by default if user doesn't write a movie.
@@ -126,3 +126,19 @@ function movieThis() {
         })
 }
 
+//DO WHAT IT SAYS
+function doWhatItSays() {
+    fs.appendFile("random.txt", utf8, function(err, data) {
+        if(err) {
+           return console.log(err);
+        }
+            //.split to separate the objects withing a new array
+            if(data) {
+            let dataArr = data.split(",");
+            userInput = dataArr[0];
+            userQuery = dataArr[1];
+            commands(userInput, userQuery);
+            console.log("Content added")
+            }
+    })
+}
