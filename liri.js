@@ -106,63 +106,23 @@ function spotifyThisSong() {
 }
 
 //THIS IS A MIRACLE. THIS ONE WORKS!!!!
-// function movieThis() {
-//     // var queryUrl = "http://www.omdbapi.com/?t=shrek&apikey=ade4141a"
-//     var queryUrl = "http://www.omdbapi.com/?t=" + userQuery + "&apikey=ade4141a"
-//     axios.get(queryUrl).then(function(err, resp) {
-
-//         if(err) {
-//             return console.error(err);
-//         }else{
-//             console.log(resp.data)
-//         }
-//     })
-// }
-
-
-// function movieThis() {
-//     // var queryUrl = "http://www.omdbapi.com/?t=shrek&apikey=ade4141a"
-//     var queryUrl = "http://www.omdbapi.com/?t=" + userQuery + "&apikey=ade4141a"
-//     axios.get(queryUrl).then(function(err, resp, body) {
-
-//         // if(err) {
-//         //     return console.error(err);
-//         // }
-//         if(userQuery){			
-// 			console.log("Movie: " + body.data.Title);
-// 			// console.log("Release Year: " + body.Year);
-// 			// console.log("IMDB Rating: " + body.imdbRating);
-// 			// console.log("Rotten Tomatoes Ratings: " + body.Ratings[1].Value);
-// 			// console.log("Country: " + body.Country);
-// 			// console.log("Language: " + body.Language);
-// 			// console.log("Plot: " + body.Plot);
-// 			// console.log("Actors: " + body.Actors);
-// 		}else{
-//             console.log("meehh")
-//         }
-//     })
-// }
-
-
 function movieThis() {
-    console.log(`\n - - - - -\n\nSEARCHING FOR..."${userQuery}"`);
-    // if (!userQuery) {
-    //     userQuery = "mr nobody";
-    // };
+    console.log(`\n - - - - -\n\nGET READY THE POP CORN. SEARCHING FOR..."${userQuery}"`);
+    //Movie by default if user doesn't write a movie.
+    if (!userQuery) {
+        userQuery = "mr nobody";
+    };
     // REQUEST USING OMDB API
     var queryUrl = "http://www.omdbapi.com/?t=" + userQuery + "&apikey=ade4141a"
-    axios.get(queryUrl).then(function (error, response, body) {
-        console.log(response);
-        let userMovie = body;
+    axios.get(queryUrl).then(function(resp) {
 
-        // // BECAUSE THE ROTTEN TOMATOES RATING WAS NESTED IT WAS NECESSARY TO CAPTURE ITS VALUES IN AN ARRAY TO CREATE A PATH
-        // let ratingsArr = userMovie.Ratings;
-        // if (ratingsArr.length > 2) {}
+        let userMovie = resp.data;
+        if(userQuery){
+     
+            console.log(`\nMOVIE TIME! \n\nTitle: ${userMovie.Title}\nReleased: ${userMovie.Year}\nIMDb Rating: ${userMovie.imdbRating}\nRotten Tomatoes Rating: ${userMovie.Ratings[1].Value}\nCountry: ${userMovie.Country}\nLanguage: ${userMovie.Language}\nPlot: ${userMovie.Plot}\nCast: ${userMovie.Actors}\n\n- - - - -`)
+        } else {
+            return console.log("Movie able to be found. Error:" + error)
+        };
+        })
+}
 
-        // if (!error && response.statusCode === 200) {
-        //     console.log(`\nBA DA BOP!  That's for you...\n\nTitle: ${userMovie.Title}\nCast: ${userMovie.Actors}\nReleased: ${userMovie.Year}\nIMDb Rating: ${userMovie.imdbRating}\nRotten Tomatoes Rating: ${userMovie.Ratings[1].Value}\nCountry: ${userMovie.Country}\nLanguage: ${userMovie.Language}\nPlot: ${userMovie.Plot}\n\n- - - - -`)
-        // } else {
-        //     return console.log("Movie able to be found. Error:" + error)
-        // };
-    })
-};
