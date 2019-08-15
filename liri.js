@@ -59,21 +59,18 @@ function concertThis() {
     var queryUrl = "https://rest.bandsintown.com/artists/" + userQuery + "/events?app_id=" + bandsintown
     axios.get(queryUrl).then(function(resp) {
         // console.log(resp.data);
-        var userBand = resp.data;
+        var userBand = resp.data[0];
    
-    
-        //This loop will find all the data found one by one 
-        for (var i = 0; i < userBand.length; i++) {
-            // console.log(userBand[i]);
-            console.log("\n")
-            console.log('Artist: ' + userBand[i].lineup[0]);
-            console.log('Artist: ' + userBand[i].venue.name);
-            //FORMAT THE DATE & TIME WITH MOMENT
-            let concertDate = moment(userBand[i].datetime).format("MM/DD/YYYY hh:00 A");
+            console.log("\n----------------\n")
+            console.log("Artist: " + userBand.lineup[0])
+            console.log("Artist: " + userBand.venue.name);
+
+            // //FORMAT THE DATE & TIME WITH MOMENT
+            let concertDate = moment(userBand.datetime).format("MM/DD/YYYY hh:00 A");
             console.log("Date & Time: " + concertDate);
-            console.log("\n--------------------\n")
+            console.log("\n----------------\n")
         
-    }
+    
     }).catch(function(err) {
         console.log("Band or concert not found, Try with something cool like Of Monsters and Men!")
     })
@@ -129,7 +126,7 @@ function movieThis() {
 
 //DO WHAT IT SAYS
 function doWhatItSays() {
-    fs.appendFile("random.txt", utf8, function(err, data) {
+    fs.readFile("random.txt", "utf8", function(err, data) {
         if(err) {
            return console.log(err);
         }
@@ -139,7 +136,6 @@ function doWhatItSays() {
             userInput = dataArr[0];
             userQuery = dataArr[1];
             commands(userInput, userQuery);
-            console.log("Content added")
             }
     })
 }
