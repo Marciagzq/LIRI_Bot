@@ -58,9 +58,10 @@ function concertThis() {
     console.log("Searching for " + userQuery);
     var queryUrl = "https://rest.bandsintown.com/artists/" + userQuery + "/events?app_id=" + bandsintown
     axios.get(queryUrl).then(function(resp) {
-        // console.log(resp);
+        // console.log(resp.data);
         var userBand = resp.data;
-        if(!err){
+   
+    
         //This loop will find all the data found one by one 
         for (var i = 0; i < userBand.length; i++) {
             // console.log(userBand[i]);
@@ -71,7 +72,7 @@ function concertThis() {
             let concertDate = moment(userBand[i].datetime).format("MM/DD/YYYY hh:00 A");
             console.log("Date & Time: " + concertDate);
             console.log("\n--------------------\n")
-        }
+        
     }
     }).catch(function(err) {
         console.log("Band or concert not found, Try with something cool like Of Monsters and Men!")
